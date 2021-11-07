@@ -1,0 +1,72 @@
+#include "actionlib/client/simple_action_client.h"
+#include "actionlib/client/terminal_state.h"
+#include "mid_term/Action1Action.h"
+#include "ros/ros.h"
+
+class 119{
+    protected:
+    ros::NodeHandle nh;
+    ros::ServiceClient PID_client = nh.serviceClient<mid_term::Service1>("clear_accident");
+    actionlib::SimpleActionServer<mid_term::Action1Action> action_server;
+    std::string action_name_;
+    mid_term::Action1Feedback feedback;
+    mid_term::Action1Result result;
+    mid_term::Service1 srv;
+
+    public:
+    119(std::string name)
+        : action_server(nh, name, boost::bind(&119::executeCB, this, _1),
+            false),
+            action_name_(name) {
+        int speed = 100;
+        float x,y = 0;
+        action_server.start();
+      }
+
+    ~119(void) {}
+
+    void executeCB(const mid_term::Action1GoalConstPtr& goal){
+      ros::Rate r(10);
+      while(!action_server.isPreemptRequested()|| ros::ok())
+      {
+        if(x == goal->x && y = goal->y)
+            {
+                ROS_INFO("control complete");
+                ROS_INFO("current position_x : %f", x);
+                ROS_INFO("current position_y : %f", y);
+                result.x = x;
+                result.y = y;
+                action_server.setSucceeded(result);
+                srv.request.a = true;
+                PID_client.call(srv);
+                x,y = 0;
+                break;
+            }
+        else
+        {
+            ROS_INFO("control progressing");
+            ROS_INFO("current position_x : %f", x);
+            ROS_INFO("current position_y : %f", y);
+            x += 2*speed/100;
+            y += speed/100;
+            feedback.x = x;
+            feedback.y = y;
+            action_server.publishFeedback(feedback);
+        }
+        r.sleep();
+        ros::spinOnce();
+      }
+
+  }
+    int main(int argc , char** argv){
+        ros::init(argc, argv, "119");
+        119 amb ("119");
+        while(ros::ok())
+        {
+          r.sleep();
+          ros::spinOnce();
+        }
+        return 0;
+    }
+
+

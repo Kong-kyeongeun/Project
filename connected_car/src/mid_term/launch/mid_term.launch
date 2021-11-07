@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<launch>
+    <node pkg="mid_term" type="car_1" name="car_1" />
+
+    <node pkg="mid_term" type="car_2" name="car_2" />
+
+    <node pkg="mid_term" type="car_3" name="car_3" />
+
+    <node pkg="mid_term" type="control_center" name="control_center" output= "screen" />
+
+    <node pkg="mid_term" type="police_office" name="police_office" />
+
+    <node pkg="mid_term" type="simulator" name="simulator" />
+
+    <node pkg="mid_term" type="home.py" name="home" />
+
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find mid_term)/rviz/sim.rviz" />
+
+</launch>

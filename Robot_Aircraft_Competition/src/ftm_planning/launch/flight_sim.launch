@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<launch>
+    <node pkg="ftm_planning" type="setpoint_test" name="setpoint_test" output="screen">
+    </node>
+    <node pkg="ftm_planning" type="logger" name="logger" output="screen">
+    </node>
+    <node pkg="ftm_planning" type="diagnose" name="diagnose" output="screen">
+    </node>
+    <node pkg="ftm_planning" type="local_planner" name="local_planner" output="screen" >
+    <param name = "radius1" type="int" value = "20"/>
+    <param name = "radius2" type="int" value = "15"/>
+    </node>
+    <node pkg="ftm_planning" type="mission_planner" name="mission_planner">
+    </node>
+    <node pkg="ftm_planning" type="avoidance_operator" name="avoidance_operator">
+    </node>
+    <node pkg="ftm_planning" type="avoidance_simulator" name="avoidance_simulator">
+    </node>
+    <node pkg="ftm_planning" type="cord_transfomer.py" name="cord_transformer" output="screen">
+        <param name = "home_lat" type="double" value = "36.58131017"/>
+        <param name = "home_lon" type="double" value = "127.52637001"/>
+        <param name = "home_alt" type="double" value = "96"/>
+
+        <param name = "frb1_lat" type="double" value = "36.58100650"/>
+        <param name = "frb1_lon" type="double" value = "127.52655239"/>
+        <param name = "frb1_alt" type="double" value = "116"/>
+
+        <param name = "mwp_lat" type="double" value = "36.58066411"/>
+        <param name = "mwp_lon" type="double" value = "127.52673742"/>
+        <param name = "mwp_alt" type="double" value = "116"/>
+
+        <param name = "frb2_lat" type="double" value = "37.5481359"/>
+        <param name = "frb2_lon" type="double" value = "127.0784611"/>
+        <param name = "frb2_alt" type="double" value = "116.604288309"/>
+
+        <param name = "wp_lat" type="double" value = "36.58118480"/>
+        <param name = "wp_lon" type="double" value = "127.52743940"/>
+        <param name = "wp_alt" type="double" value = "116"/>
+<!--    ## 시뮬레이션용 좌표 (어린이 대공원)
+    ## 25미터 간격으로 홈 금지1 미션 금지2 반환-->
+    </node>
+    <include file="$(find ftm_planning)/launch/px4_sim.launch">
+      </include>
+
+</launch>
